@@ -1,5 +1,10 @@
 # Affiliate
 
+#Install node 
+nvm list-remote
+nvm use v12.22.12
+sudo npm install -g @angular/cli@12.2.0
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
 
 ## Development server

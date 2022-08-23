@@ -1,0 +1,115 @@
+<!-- Navbar -->
+<div>
+  <header>
+    <!-- Image and text -->
+    <nav class="navbar navbar-white bg-light">
+      <a class="navbar-brand" href="">
+        <img src="../assets/logo.png" width="80" height="35" class="d-inline-block align-top" alt="Logo" />
+        <span class="text-dark"> <b>Karavya</b> Solutions</span>
+      </a>
+
+      <ul class="nav">
+        <li>
+          <a class="nav-link" href="">Home </a>
+        </li>
+        <li>
+          <a class="nav-link btn" (click)="open(content)">SignIn</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<div class="justify-container">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-2 col-md-2 col-sm-2 overflow-hidden">
+      <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Content -->
+    <div class="col-10 col-md-10 col-sm-10 border overflow-hidden">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Footer -->
+<div class="mt-5">
+  <!-- Footer -->
+  <footer class="page-footer font-small bg-light darken-3">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+      © 2020-{{ footerYear }} Copyright:
+      <a href="http://www.karavyasolutions.com" target="_blank">
+        KaravyaSolution.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+</div>
+
+
+<!-- Model for SignIn -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="text-center"><b>Sign In</b></h4>
+    <a type="button" class=""(click)="modal.dismiss('Cross click')">X</a> 
+  </div>
+
+  <ng-template [ngIf]="smessage">
+    <div class="alert alert-success">{{smessage}}</div>
+  </ng-template>
+
+  <form novalidate [formGroup]="profileForm"  (ngSubmit)="onSubmit()">
+    <div class="form-row align-items-center m-3">
+
+      <div class="col-auto">
+        <label class="sr-only" for="inlineFormInput">Name</label><i class="text-danger">*</i>
+        <input type="text" class="form-control mb-2" id="1" placeholder="Name"  formControlName="name" >
+        <div *ngIf="profileForm.controls['name'].invalid && (profileForm.controls['name'].dirty || profileForm.controls['name'].touched)"
+                class="text-danger">
+                <div *ngIf="profileForm.controls['name'].errors?.required">Name is required.</div>
+                <div *ngIf="profileForm.controls['name'].errors?.pattern">Only Alphabets</div>
+            </div>
+      </div>
+
+      <div class="col-auto">
+        <label class="sr-only" for="inlineFormInput">Email</label><i class="text-danger">*</i>
+        <input type="text" class="form-control mb-2" id="2" placeholder="Email"  formControlName="email">
+        <div *ngIf="profileForm.controls['email'].invalid && (profileForm.controls['email'].dirty || profileForm.controls['email'].touched)"
+                class="text-danger">
+                <div *ngIf="profileForm.controls['email'].errors?.required">Email is required.</div>
+                <div *ngIf="profileForm.controls['email'].errors?.pattern">Invalid email address
+                </div>
+            </div>
+      </div>
+      
+      <div class="col-auto">
+          <label class="sr-only" for="inlineFormInput">Password</label><i class="text-danger">*</i>
+          <input type="password" class="form-control mb-2" id="3" placeholder="Password"  formControlName="password">
+        <div *ngIf="profileForm.controls['password'].invalid && (profileForm.controls['password'].dirty || profileForm.controls['password'].touched)" class="text-danger">
+            <span *ngIf="profileForm.controls['password'].errors?.required"> Password is required.</span>
+            <span *ngIf="profileForm.controls['password'].errors?.minlength"> Password length must be greater than 10 characters.</span>
+            <span *ngIf="profileForm.controls['password'].errors?.pattern">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</span>
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <label class="sr-only" for="inlineFormInput">Confirm Password</label><i class="text-danger">*</i>
+        <input type="password" class="form-control mb-2" id="4" placeholder="Confirm Password"  formControlName="cpassword">
+        <div *ngIf="profileForm.controls['cpassword'].invalid && (profileForm.controls['cpassword'].dirty || profileForm.controls['cpassword'].touched)" class="text-danger">
+          <span *ngIf="profileForm.controls['cpassword'].errors?.required">Confirm password is required.</span>
+          <span *ngIf="profileForm.controls['cpassword'].errors?.confirmedValidator">Confirm password must be same</span>         
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <button type="submit" class="btn btn-lg btn-primary mb-2" data-dismiss="modal" >Sign In</button>
+      </div>
+      
+    </div>
+  </form>
+</ng-template>

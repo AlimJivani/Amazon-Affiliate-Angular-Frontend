@@ -1,0 +1,106 @@
+<ngx-spinner
+  bdColor="rgba(51, 51, 51, 0.8)"
+  size="default"
+  type="ball-spin-clockwise"
+>
+  <p style="color: white">Loding....</p>
+</ngx-spinner>
+
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="col-md-9">
+    <div class="row">
+      <!-- Heading -->
+      <div class="col-8">
+        <h2 class="justify-content-start">Products {{ totalProduct }}</h2>
+      </div>
+      <!-- Filter -->
+      <div class="col-3" (change)="filter($event)">
+        <select id="PerPage" class="btn border">
+          <option value="ASC">Low to high</option>
+          <option value="DESC">High to low</option>
+        </select>
+      </div>
+
+      <!-- Change Item Page -->
+      <div
+        *ngIf="totalProduct > 5"
+        class="col-1"
+        (change)="changeItemPerPage($event)"
+      >
+        <select id="PerPage" class="btn border">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+        </select>
+      </div>
+    </div>
+
+    <hr />
+    <!-- display product -->
+    <div *ngIf="totalProduct !== 0; then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock>
+      <!-- Product for loop -->
+      <div class="row product-list">
+        <div *ngFor="let product of productList" class="col-md-4">
+          <section class="panel border">
+            <div class="pro-img-box">
+              <img
+                src="https://via.placeholder.com/250x220/FFB6C1/000000"
+                alt=""
+              />
+            </div>
+            <div
+              class="panel-body text-center text-justify"
+              style="font-family: sans-serif"
+            >
+              <h5>
+                <p>{{ product.name }}</p>
+                <span class="price"><b>Price: </b>₹{{ product.price }}/-</span>
+              </h5>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <a
+                class="btn btn-outline-secondary"
+                target="_blank"
+                href="https://www.amazon.in/SG-Sierra-Kashmir-Willow-Cricket/dp/B07KPZ7YJJ/ref=sr_1_2?dchild=1&keywords=sg+bat&qid=1629290426&sr=8-2"
+                >Buy Now</a
+              >
+            </div>
+            <p style="font-size: small" class="text-break mt-2">
+              <b>Description :</b>{{ product.description }}
+            </p>
+          </section>
+          <hr />
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="btn-group">
+        <button
+          type="button"
+          *ngIf="pid"
+          (click)="onPrevious()"
+          class="btn btn-default border"
+          [disabled]="pid === 1"
+        >
+          Prev
+        </button>
+        <span *ngIf="pid" class="btn btn-file border"
+          >Page {{ pid }} out of {{ pageCount }}</span
+        >
+        <button
+          type="button"
+          [disabled]="pageCount === pid"
+          (click)="onNext()"
+          class="btn btn-default border"
+        >
+          Next
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #elseBlock>
+      <h1>No Products to display</h1>
+    </ng-template>
+  </div>
+</div>
+
